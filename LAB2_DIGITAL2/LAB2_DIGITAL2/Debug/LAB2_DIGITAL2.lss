@@ -1,0 +1,328 @@
+
+LAB2_DIGITAL2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  00000274  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000220  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000274  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002a4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000080  00000000  00000000  000002e4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000b37  00000000  00000000  00000364  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000007d0  00000000  00000000  00000e9b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000529  00000000  00000000  0000166b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000dc  00000000  00000000  00001b94  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000463  00000000  00000000  00001c70  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000324  00000000  00000000  000020d3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000060  00000000  00000000  000023f7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
+   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+
+00000068 <__ctors_end>:
+  68:	11 24       	eor	r1, r1
+  6a:	1f be       	out	0x3f, r1	; 63
+  6c:	cf ef       	ldi	r28, 0xFF	; 255
+  6e:	d8 e0       	ldi	r29, 0x08	; 8
+  70:	de bf       	out	0x3e, r29	; 62
+  72:	cd bf       	out	0x3d, r28	; 61
+  74:	0e 94 f9 00 	call	0x1f2	; 0x1f2 <main>
+  78:	0c 94 0e 01 	jmp	0x21c	; 0x21c <_exit>
+
+0000007c <__bad_interrupt>:
+  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000080 <LDC_port>:
+	 LDC_CMD(0x1C);
+ }
+ 
+ //Desplazamiento a la izquierda
+ void LDC_Desplazamiento_izquierda(void){
+	 LDC_CMD(0x18);
+  80:	80 ff       	sbrs	r24, 0
+  82:	04 c0       	rjmp	.+8      	; 0x8c <LDC_port+0xc>
+  84:	95 b1       	in	r25, 0x05	; 5
+  86:	90 62       	ori	r25, 0x20	; 32
+  88:	95 b9       	out	0x05, r25	; 5
+  8a:	03 c0       	rjmp	.+6      	; 0x92 <LDC_port+0x12>
+  8c:	95 b1       	in	r25, 0x05	; 5
+  8e:	9f 7d       	andi	r25, 0xDF	; 223
+  90:	95 b9       	out	0x05, r25	; 5
+  92:	81 ff       	sbrs	r24, 1
+  94:	04 c0       	rjmp	.+8      	; 0x9e <LDC_port+0x1e>
+  96:	95 b1       	in	r25, 0x05	; 5
+  98:	90 61       	ori	r25, 0x10	; 16
+  9a:	95 b9       	out	0x05, r25	; 5
+  9c:	03 c0       	rjmp	.+6      	; 0xa4 <LDC_port+0x24>
+  9e:	95 b1       	in	r25, 0x05	; 5
+  a0:	9f 7e       	andi	r25, 0xEF	; 239
+  a2:	95 b9       	out	0x05, r25	; 5
+  a4:	82 ff       	sbrs	r24, 2
+  a6:	04 c0       	rjmp	.+8      	; 0xb0 <LDC_port+0x30>
+  a8:	9b b1       	in	r25, 0x0b	; 11
+  aa:	94 60       	ori	r25, 0x04	; 4
+  ac:	9b b9       	out	0x0b, r25	; 11
+  ae:	03 c0       	rjmp	.+6      	; 0xb6 <LDC_port+0x36>
+  b0:	9b b1       	in	r25, 0x0b	; 11
+  b2:	9b 7f       	andi	r25, 0xFB	; 251
+  b4:	9b b9       	out	0x0b, r25	; 11
+  b6:	83 ff       	sbrs	r24, 3
+  b8:	04 c0       	rjmp	.+8      	; 0xc2 <LDC_port+0x42>
+  ba:	9b b1       	in	r25, 0x0b	; 11
+  bc:	98 60       	ori	r25, 0x08	; 8
+  be:	9b b9       	out	0x0b, r25	; 11
+  c0:	03 c0       	rjmp	.+6      	; 0xc8 <LDC_port+0x48>
+  c2:	9b b1       	in	r25, 0x0b	; 11
+  c4:	97 7f       	andi	r25, 0xF7	; 247
+  c6:	9b b9       	out	0x0b, r25	; 11
+  c8:	84 ff       	sbrs	r24, 4
+  ca:	04 c0       	rjmp	.+8      	; 0xd4 <LDC_port+0x54>
+  cc:	9b b1       	in	r25, 0x0b	; 11
+  ce:	90 61       	ori	r25, 0x10	; 16
+  d0:	9b b9       	out	0x0b, r25	; 11
+  d2:	03 c0       	rjmp	.+6      	; 0xda <LDC_port+0x5a>
+  d4:	9b b1       	in	r25, 0x0b	; 11
+  d6:	9f 7e       	andi	r25, 0xEF	; 239
+  d8:	9b b9       	out	0x0b, r25	; 11
+  da:	85 ff       	sbrs	r24, 5
+  dc:	04 c0       	rjmp	.+8      	; 0xe6 <LDC_port+0x66>
+  de:	9b b1       	in	r25, 0x0b	; 11
+  e0:	90 62       	ori	r25, 0x20	; 32
+  e2:	9b b9       	out	0x0b, r25	; 11
+  e4:	03 c0       	rjmp	.+6      	; 0xec <LDC_port+0x6c>
+  e6:	9b b1       	in	r25, 0x0b	; 11
+  e8:	9f 7d       	andi	r25, 0xDF	; 223
+  ea:	9b b9       	out	0x0b, r25	; 11
+  ec:	86 ff       	sbrs	r24, 6
+  ee:	04 c0       	rjmp	.+8      	; 0xf8 <LDC_port+0x78>
+  f0:	9b b1       	in	r25, 0x0b	; 11
+  f2:	90 64       	ori	r25, 0x40	; 64
+  f4:	9b b9       	out	0x0b, r25	; 11
+  f6:	03 c0       	rjmp	.+6      	; 0xfe <LDC_port+0x7e>
+  f8:	9b b1       	in	r25, 0x0b	; 11
+  fa:	9f 7b       	andi	r25, 0xBF	; 191
+  fc:	9b b9       	out	0x0b, r25	; 11
+  fe:	88 23       	and	r24, r24
+ 100:	24 f4       	brge	.+8      	; 0x10a <LDC_port+0x8a>
+ 102:	8b b1       	in	r24, 0x0b	; 11
+ 104:	80 68       	ori	r24, 0x80	; 128
+ 106:	8b b9       	out	0x0b, r24	; 11
+ 108:	08 95       	ret
+ 10a:	8b b1       	in	r24, 0x0b	; 11
+ 10c:	8f 77       	andi	r24, 0x7F	; 127
+ 10e:	8b b9       	out	0x0b, r24	; 11
+ 110:	08 95       	ret
+
+00000112 <LDC_CMD>:
+ 112:	95 b1       	in	r25, 0x05	; 5
+ 114:	97 7f       	andi	r25, 0xF7	; 247
+ 116:	95 b9       	out	0x05, r25	; 5
+ 118:	0e 94 40 00 	call	0x80	; 0x80 <LDC_port>
+ 11c:	85 b1       	in	r24, 0x05	; 5
+ 11e:	84 60       	ori	r24, 0x04	; 4
+ 120:	85 b9       	out	0x05, r24	; 5
+ 122:	8f e9       	ldi	r24, 0x9F	; 159
+ 124:	9f e0       	ldi	r25, 0x0F	; 15
+ 126:	01 97       	sbiw	r24, 0x01	; 1
+ 128:	f1 f7       	brne	.-4      	; 0x126 <LDC_CMD+0x14>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <LDC_CMD+0x1a>
+ 12c:	00 00       	nop
+ 12e:	85 b1       	in	r24, 0x05	; 5
+ 130:	8b 7f       	andi	r24, 0xFB	; 251
+ 132:	85 b9       	out	0x05, r24	; 5
+ 134:	08 95       	ret
+
+00000136 <initLDC8>:
+ 136:	8a b1       	in	r24, 0x0a	; 10
+ 138:	8c 6f       	ori	r24, 0xFC	; 252
+ 13a:	8a b9       	out	0x0a, r24	; 10
+ 13c:	1b b8       	out	0x0b, r1	; 11
+ 13e:	84 b1       	in	r24, 0x04	; 4
+ 140:	8c 63       	ori	r24, 0x3C	; 60
+ 142:	84 b9       	out	0x04, r24	; 4
+ 144:	15 b8       	out	0x05, r1	; 5
+ 146:	80 e0       	ldi	r24, 0x00	; 0
+ 148:	0e 94 40 00 	call	0x80	; 0x80 <LDC_port>
+ 14c:	2f ef       	ldi	r18, 0xFF	; 255
+ 14e:	89 ef       	ldi	r24, 0xF9	; 249
+ 150:	90 e0       	ldi	r25, 0x00	; 0
+ 152:	21 50       	subi	r18, 0x01	; 1
+ 154:	80 40       	sbci	r24, 0x00	; 0
+ 156:	90 40       	sbci	r25, 0x00	; 0
+ 158:	e1 f7       	brne	.-8      	; 0x152 <initLDC8+0x1c>
+ 15a:	00 c0       	rjmp	.+0      	; 0x15c <initLDC8+0x26>
+ 15c:	00 00       	nop
+ 15e:	88 e3       	ldi	r24, 0x38	; 56
+ 160:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 164:	8c e0       	ldi	r24, 0x0C	; 12
+ 166:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 16a:	81 e0       	ldi	r24, 0x01	; 1
+ 16c:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 170:	86 e0       	ldi	r24, 0x06	; 6
+ 172:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 176:	08 95       	ret
+
+00000178 <LDC_write_char>:
+ 178:	95 b1       	in	r25, 0x05	; 5
+ 17a:	98 60       	ori	r25, 0x08	; 8
+ 17c:	95 b9       	out	0x05, r25	; 5
+ 17e:	0e 94 40 00 	call	0x80	; 0x80 <LDC_port>
+ 182:	85 b1       	in	r24, 0x05	; 5
+ 184:	84 60       	ori	r24, 0x04	; 4
+ 186:	85 b9       	out	0x05, r24	; 5
+ 188:	8f e7       	ldi	r24, 0x7F	; 127
+ 18a:	9e e3       	ldi	r25, 0x3E	; 62
+ 18c:	01 97       	sbiw	r24, 0x01	; 1
+ 18e:	f1 f7       	brne	.-4      	; 0x18c <LDC_write_char+0x14>
+ 190:	00 c0       	rjmp	.+0      	; 0x192 <LDC_write_char+0x1a>
+ 192:	00 00       	nop
+ 194:	85 b1       	in	r24, 0x05	; 5
+ 196:	8b 7f       	andi	r24, 0xFB	; 251
+ 198:	85 b9       	out	0x05, r24	; 5
+ 19a:	8f e8       	ldi	r24, 0x8F	; 143
+ 19c:	91 e0       	ldi	r25, 0x01	; 1
+ 19e:	01 97       	sbiw	r24, 0x01	; 1
+ 1a0:	f1 f7       	brne	.-4      	; 0x19e <LDC_write_char+0x26>
+ 1a2:	00 c0       	rjmp	.+0      	; 0x1a4 <LDC_write_char+0x2c>
+ 1a4:	00 00       	nop
+ 1a6:	08 95       	ret
+
+000001a8 <LDC_CURSOR>:
+ }
+ 
+ //Establecer cursor
+ void LDC_CURSOR(char c, char f){
+	 char temp;
+	 if (f==1){
+ 1a8:	61 30       	cpi	r22, 0x01	; 1
+ 1aa:	21 f4       	brne	.+8      	; 0x1b4 <LDC_CURSOR+0xc>
+		 temp=0x80+c-1;
+		 LDC_CMD(temp);
+ 1ac:	81 58       	subi	r24, 0x81	; 129
+ 1ae:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 1b2:	08 95       	ret
+ }
+	else if (f==2)
+ 1b4:	62 30       	cpi	r22, 0x02	; 2
+ 1b6:	19 f4       	brne	.+6      	; 0x1be <LDC_CURSOR+0x16>
+	{
+		temp=0xC0+c-1;
+		LDC_CMD(temp);
+ 1b8:	81 54       	subi	r24, 0x41	; 65
+ 1ba:	0e 94 89 00 	call	0x112	; 0x112 <LDC_CMD>
+ 1be:	08 95       	ret
+
+000001c0 <initUART>:
+}
+
+//FUNCIONES
+void initUART(){
+	//Configurar pines PD0 (TX) y PD1 (TX)
+	DDRD |= (1<<DDD1);
+ 1c0:	8a b1       	in	r24, 0x0a	; 10
+ 1c2:	82 60       	ori	r24, 0x02	; 2
+ 1c4:	8a b9       	out	0x0a, r24	; 10
+	DDRD &= ~(1<<DDD0);
+ 1c6:	8a b1       	in	r24, 0x0a	; 10
+ 1c8:	8e 7f       	andi	r24, 0xFE	; 254
+ 1ca:	8a b9       	out	0x0a, r24	; 10
+	
+	//Configurar UCSR0A
+	UCSR0A=0;
+ 1cc:	10 92 c0 00 	sts	0x00C0, r1	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7f80c0>
+	//Configuración UCSR0B: Habililitndo la interrupción al escribir:
+	//-Habilibitar recepción
+	//-Habilitación de transmisión
+	UCSR0B |= (1<<RXCIE0)|(1<<RXEN0)| (1<< TXEN0);
+ 1d0:	e1 ec       	ldi	r30, 0xC1	; 193
+ 1d2:	f0 e0       	ldi	r31, 0x00	; 0
+ 1d4:	80 81       	ld	r24, Z
+ 1d6:	88 69       	ori	r24, 0x98	; 152
+ 1d8:	80 83       	st	Z, r24
+	//Configurar UCSR0C
+	UCSR0C |= (1<<UCSZ01) | (1<<UCSZ00);
+ 1da:	e2 ec       	ldi	r30, 0xC2	; 194
+ 1dc:	f0 e0       	ldi	r31, 0x00	; 0
+ 1de:	80 81       	ld	r24, Z
+ 1e0:	86 60       	ori	r24, 0x06	; 6
+ 1e2:	80 83       	st	Z, r24
+	//Configurar UBRR0: UBRR0 = 103 -> 9600  @ 16MHz
+	UBRR0 = 103;
+ 1e4:	87 e6       	ldi	r24, 0x67	; 103
+ 1e6:	90 e0       	ldi	r25, 0x00	; 0
+ 1e8:	90 93 c5 00 	sts	0x00C5, r25	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7f80c5>
+ 1ec:	80 93 c4 00 	sts	0x00C4, r24	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7f80c4>
+ 1f0:	08 95       	ret
+
+000001f2 <main>:
+//Prototipos de función
+void initUART();
+
+int main(void)
+{
+	initUART();
+ 1f2:	0e 94 e0 00 	call	0x1c0	; 0x1c0 <initUART>
+	initLDC8();
+ 1f6:	0e 94 9b 00 	call	0x136	; 0x136 <initLDC8>
+	LDC_CURSOR(1,1);
+ 1fa:	61 e0       	ldi	r22, 0x01	; 1
+ 1fc:	81 e0       	ldi	r24, 0x01	; 1
+ 1fe:	0e 94 d4 00 	call	0x1a8	; 0x1a8 <LDC_CURSOR>
+	LDC_write_char('H');
+ 202:	88 e4       	ldi	r24, 0x48	; 72
+ 204:	0e 94 bc 00 	call	0x178	; 0x178 <LDC_write_char>
+	LDC_write_char('O');
+ 208:	8f e4       	ldi	r24, 0x4F	; 79
+ 20a:	0e 94 bc 00 	call	0x178	; 0x178 <LDC_write_char>
+	LDC_write_char('L');
+ 20e:	8c e4       	ldi	r24, 0x4C	; 76
+ 210:	0e 94 bc 00 	call	0x178	; 0x178 <LDC_write_char>
+	LDC_write_char('A');
+ 214:	81 e4       	ldi	r24, 0x41	; 65
+ 216:	0e 94 bc 00 	call	0x178	; 0x178 <LDC_write_char>
+ 21a:	ff cf       	rjmp	.-2      	; 0x21a <main+0x28>
+
+0000021c <_exit>:
+ 21c:	f8 94       	cli
+
+0000021e <__stop_program>:
+ 21e:	ff cf       	rjmp	.-2      	; 0x21e <__stop_program>

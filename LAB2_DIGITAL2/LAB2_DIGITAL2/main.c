@@ -15,8 +15,8 @@
 #include "LDC/LDC.h"
 #include "ADC/ADC.h"
 
-volatile uint8_t ADC1=0;
-volatile uint8_t ADC2=0;
+volatile uint16_t ADC1=0;
+volatile uint16_t ADC2=0;
 uint8_t POT=0;
 
 uint8_t entero=0;
@@ -32,7 +32,7 @@ void setup(){
 	cli();	//Desabilitar interrupciones
 	
 	//inicializar el ADC
-	ADC_init(1, 2, 1, 128);
+	ADC_init(0, 2, 1, 128);
 	
 	//Inicializar LCD
 	initLDC8();
@@ -59,7 +59,7 @@ int main(void)
 
 //FUNCIONES
 void decimales(){
-	float conversion=((ADC1*5.0f)/255.0f);
+	float conversion=((ADC1*5.0f)/1023.0f);
 	entero = (uint8_t)conversion;
 	float parte_decimal = conversion - (float)entero;
 	decimal = (uint8_t)(parte_decimal * 100.0f);
@@ -69,7 +69,7 @@ void decimales(){
 ISR(ADC_vect)
 {
 	ADC_CANAL(7);
-	ADC1=ADCH;
+	ADC1=ADC;
 	ADCSRA |= (1 << ADSC);	//Iniciar nueva conversión
 
 	}

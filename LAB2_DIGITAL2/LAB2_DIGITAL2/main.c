@@ -18,7 +18,6 @@
 volatile uint16_t ADC1=0;
 volatile uint16_t ADC2=0;
 uint8_t POT=0;
-
 uint8_t entero=0;
 uint8_t decimal=0;
 
@@ -52,6 +51,10 @@ int main(void)
 		sprintf(buffer, "P1: %d.%02dV", entero, decimal);
 		LDC_write_string(buffer);
 		
+		LDC_CURSOR(1,2);	//Setear el cursor para la primera línea segunda columna
+		sprintf(buffer, "S2: %d", ADC2);
+		LDC_write_string(buffer);
+	
 		_delay_ms(100);
 		
     }
@@ -68,8 +71,27 @@ void decimales(){
 //VECTOR DE INTERRUPCIÓN
 ISR(ADC_vect)
 {
-	ADC_CANAL(7);
-	ADC1=ADC;
+	POT ++;
+	switch(POT){
+		case(1):
+		ADC_CANAL(7);
+		ADC1=ADC;
+		break;
+		
+		case (2):
+		ADC_CANAL(6);
+		ADC2=ADC;
+		break;
+		
+		case(3):
+		POT=0;
+		break;
+		
+		default:
+		break;
+		
+	}
+	
 	ADCSRA |= (1 << ADSC);	//Iniciar nueva conversión
 
 	}

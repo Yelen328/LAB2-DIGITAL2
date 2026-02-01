@@ -14,13 +14,14 @@
 
 #include "LDC/LDC.h"
 #include "ADC/ADC.h"
+#include "UART/UART.h"
 
 volatile uint16_t ADC1=0;
 volatile uint16_t ADC2=0;
 uint8_t POT=0;
 uint8_t entero=0;
 uint8_t decimal=0;
-
+volatile uint8_t contadorUART=0;
 
 //Prototipos de funciones
 void setup();
@@ -31,7 +32,11 @@ void setup(){
 	cli();	//Desabilitar interrupciones
 	
 	//inicializar el ADC
+	//orientación a la derecha
+	//5V de referencia
+	//Prescaler de 128
 	ADC_init(0, 2, 1, 128);
+	INIT_UART(103);	// Desired Baud Rate 9600
 	
 	//Inicializar LCD
 	initLDC8();
@@ -45,15 +50,28 @@ int main(void)
 	setup();
     while (1) 
     {
+		//muestra el valor del potenciometro 1 en la LCD
 		LDC_CURSOR(1,1);
 		char buffer[32];
 		decimales();
-		sprintf(buffer, "P1: %d.%02dV", entero, decimal);
+		sprintf(buffer, "S1: %d.%02dV", entero, decimal);
 		LDC_write_string(buffer);
 		
+		//muestra el valor del potenciometro 2 en la LCD
 		LDC_CURSOR(1,2);	//Setear el cursor para la primera línea segunda columna
-		sprintf(buffer, "S2: %d", ADC2);
+		sprintf(buffer, "S2: %3d", ADC2);
 		LDC_write_string(buffer);
+		
+		//muestra el valor del contador por medio de la comunicación serial
+		LDC_CURSOR(11,1);	//Setear el cursor para la primera linea onceava columna
+		sprintf(buffer, "S3:%3d", contadorUART);
+		LDC_write_string(buffer);
+		
+	
+		//Muestra el valor de los potenciometros en la terminal
+		sprintf(buffer, "S1: %d.%02dV  S2: %u\r\n",
+		entero, decimal, ADC2);
+		writeString(buffer);
 	
 		_delay_ms(100);
 		
@@ -95,6 +113,25 @@ ISR(ADC_vect)
 	ADCSRA |= (1 << ADSC);	//Iniciar nueva conversión
 
 	}
+	
+
+ISR (USART_RX_vect){
+	char caracter = UDR0;
+	//WriteChar(caracter);	//Envía de vuelta el mismo carácter resibido
+	switch(caracter){
+		case ('+'):
+		contadorUART++;
+		break;
+		
+		case('-'):
+		contadorUART --;
+		break;
+		
+		default:
+		break;
+		
+	}
+}
 	
 	
 

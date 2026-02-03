@@ -51,20 +51,27 @@ int main(void)
     while (1) 
     {
 		//muestra el valor del potenciometro 1 en la LCD
-		LDC_CURSOR(1,1);
+		LDC_CURSOR(3,1);
+		LDC_write_string("S1:");
+		LDC_CURSOR(2,2);
 		char buffer[32];
 		decimales();
-		sprintf(buffer, "S1: %d.%02dV", entero, decimal);
+		sprintf(buffer, "%d.%02dV", entero, decimal);
 		LDC_write_string(buffer);
 		
+		
 		//muestra el valor del potenciometro 2 en la LCD
-		LDC_CURSOR(1,2);	//Setear el cursor para la primera línea segunda columna
-		sprintf(buffer, "S2: %3d", ADC2);
+		LDC_CURSOR(8,1);	//Setear el cursor para la primera columna segunda fila
+		LDC_write_string("S2:");
+		LDC_CURSOR(8,2);
+		sprintf(buffer, "%04d", ADC2);
 		LDC_write_string(buffer);
 		
 		//muestra el valor del contador por medio de la comunicación serial
-		LDC_CURSOR(11,1);	//Setear el cursor para la primera linea onceava columna
-		sprintf(buffer, "S3:%3d", contadorUART);
+		LDC_CURSOR(13,1);	//Setear el cursor para la primera columna segunda fila
+		LDC_write_string("S3:");
+		LDC_CURSOR(13,2);
+		sprintf(buffer, "%03d", contadorUART);
 		LDC_write_string(buffer);
 		
 	
@@ -74,6 +81,7 @@ int main(void)
 		writeString(buffer);
 	
 		_delay_ms(100);
+		
 		
     }
 }
@@ -120,10 +128,12 @@ ISR (USART_RX_vect){
 	//WriteChar(caracter);	//Envía de vuelta el mismo carácter resibido
 	switch(caracter){
 		case ('+'):
+		if (contadorUART < 256)
 		contadorUART++;
 		break;
 		
 		case('-'):
+		if (contadorUART>=0)
 		contadorUART --;
 		break;
 		
